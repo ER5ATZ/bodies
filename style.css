@@ -51,4 +51,5 @@ section {
 a, span {
     color: white;
     display: inline;
+    cursor: default;
 }

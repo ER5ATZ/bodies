@@ -43,7 +43,7 @@ class Sun {
         this.velocity.copy(velocityDirection.multiplyScalar(initialSpeed));
 
         this.trailPoints = [];
-        this.trailMaxLength = 100 * size;
+        this.trailMaxLength = 111 * size;
         this.trailGeometry = new THREE.BufferGeometry();
         this.trailMaterial = new THREE.LineBasicMaterial({ color: color });
         this.trail = new THREE.Line(this.trailGeometry, this.trailMaterial);

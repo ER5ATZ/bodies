@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 
 const moonTexture = new THREE.TextureLoader().load('moon.jpg');
-const moonNormalTexture = new THREE.TextureLoader().load('normal.jpg');
+const moonNormalTexture = new THREE.TextureLoader().load('normal.png');
 
 class Moon {
     constructor(size, position, suns) {
         this.velocity = new THREE.Vector3();
         this.barycenter = new THREE.Vector3();
         this.rotationAxis = new THREE.Vector3(0, 1, 0);
-        this.rotationSpeed = 0.02 / size;
+        this.rotationSpeed = 0.06 / size;
         this.mass = size;
 
         this.mesh = new THREE.Mesh(
@@ -52,17 +52,20 @@ class Moon {
         }
 
         this.mesh.position.add(this.velocity);
+        //this.updateBarycenter(suns);
         this.mesh.rotateOnWorldAxis(this.rotationAxis, this.rotationSpeed);
     }
 
     updateBarycenter(suns) {
         this.barycenter.set(0, 0, 0);
+        let totalMass = this.mass;
 
         for (const sun of suns) {
-            this.barycenter.add(sun.mesh.position);
+            totalMass += sun.mass;
+            this.barycenter.add(sun.mesh.position.clone().multiplyScalar(sun.mass));
         }
 
-        this.barycenter.divideScalar(suns.length);
+        this.barycenter.divideScalar(totalMass);
     }
 }
 
